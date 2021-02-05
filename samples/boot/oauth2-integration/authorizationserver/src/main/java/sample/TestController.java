@@ -4,12 +4,16 @@ import java.util.Set;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
 import org.springframework.security.oauth2.core.oidc.OidcScopes;
 import org.springframework.security.oauth2.server.authorization.OAuth2Authorization;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationAttributeNames;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClient;
+import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -30,6 +34,21 @@ public class TestController {
 
 	@Autowired
 	JpaOAuth2AuthorizationRepository oauthRepo;
+
+//	@Qualifier("jpaUserDetailsManager")
+//	@Autowired
+//	UserDetailsManager users;
+//
+//	@GetMapping("/test/user/create")
+//	public void createUser() {
+//		final UserDetails user = User.withDefaultPasswordEncoder()
+//									 .username("tom")
+//									 .password("password")
+//									 .roles("USER")
+//									 .build();
+//		users.createUser(user);
+//		System.out.println("CREATE USER SUCCESS!!");
+//	}
 
 //	@GetMapping("")
 //	public String getClientById(@RequestParam String id) {

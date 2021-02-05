@@ -27,6 +27,7 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 import sample.provider.TestProvider;
+import sample.service.JpaUserDetailsManager;
 
 /**
  * @author Joe Grandja
@@ -39,25 +40,30 @@ public class DefaultSecurityConfig {
 	@Bean
 	SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
 		http
-			.authenticationProvider(new TestProvider())
-			.authorizeRequests().antMatchers("/test/**").permitAll().and()
-			.authorizeRequests(authorizeRequests ->
-				authorizeRequests.anyRequest().authenticated()
-			)
-			.formLogin(withDefaults());
+				.authenticationProvider(new TestProvider())
+				.authorizeRequests().antMatchers("/test/**").permitAll().and()
+				.authorizeRequests(authorizeRequests ->
+										   authorizeRequests.anyRequest().authenticated()
+				)
+				.formLogin(withDefaults());
 		return http.build();
 	}
 	// formatter:on
 
 	// @formatter:off
+//	@Bean
+//	UserDetailsService users() {
+//		UserDetails user = User.withDefaultPasswordEncoder()
+//				.username("user1")
+//				.password("password")
+//				.roles("USER")
+//				.build();
+//		return new InMemoryUserDetailsManager(user);
+//	}
+
 	@Bean
-	UserDetailsService users() {
-		UserDetails user = User.withDefaultPasswordEncoder()
-				.username("user1")
-				.password("password")
-				.roles("USER")
-				.build();
-		return new InMemoryUserDetailsManager(user);
+	UserDetailsService jpaUserDetailsManager() {
+		return new JpaUserDetailsManager();
 	}
 	// @formatter:on
 
